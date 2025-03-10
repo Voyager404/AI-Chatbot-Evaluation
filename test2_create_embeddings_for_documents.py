@@ -5,6 +5,9 @@ from nltk.tokenize import sent_tokenize
 import os
 import unicodedata
 
+# Pfad für die Dokumente, die an die RAG-Engine übergeben werden sollen
+pdf_folder = "pdf"
+
 def extract_text_from_pdf(pdf_path):
     doc = fitz.open(pdf_path)
     text_per_page = [(page.number + 1, page.get_text("text")) for page in doc]
@@ -43,13 +46,9 @@ model = SentenceTransformer(
 # Die Eingabe ist auf 1024 Sequenzen limitiert
 model.max_seq_length=1024
 
-# Ordner mit PDFs
-pdf_folder = "pdfs"
-
 # Manuelle Zuordnung von externen Links zu bestimmten Themen
 link_mapping = {
-    "Onboarding": "https://www.icloud.com/iclouddrive/03cE0xtTG-zlvX7joCaUPWelQ",
-    "Excel": "https://www.icloud.com/iclouddrive/03cE0xtTG-zlvX7joCaUPWelQ",
+    "Onboarding": "https://storage.googleapis.com/rag-documents-voyager404/Einfu%CC%88hrungO365.pdf",
 }
 
 role_mapping = {
